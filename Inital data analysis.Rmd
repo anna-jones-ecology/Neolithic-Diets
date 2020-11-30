@@ -5,7 +5,7 @@ output: html_notebook
 
 opening excel file with cleaned data
 ```{r}
-read.csv("Rick Schulting - Irish human isos.xlsx")
-lemon
+read.csv("Rick Schulting - Irish human isos.csv")
+
 ```
 

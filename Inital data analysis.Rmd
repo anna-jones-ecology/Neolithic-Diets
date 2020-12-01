@@ -5,7 +5,41 @@ output: html_notebook
 
 opening excel file with cleaned data
 ```{r}
-read.csv("Rick Schulting - Irish human isos.csv") 
+library(ggplot2)
+ds<-read.csv("Rick Schulting - Irish human isos.csv") 
+ds[17:21]<- NULL
+ds<-ds[-c(150, 151, 152),]
+ds$d13C<-as.numeric(ds$d13C)
+ds$d15N<-as.numeric(ds$d15N)
+ggplot(data = ds, aes(x=Site.type, y=d15N))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=Site.type, y=d13C))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=Age, y=d15N))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=Age, y=d13C))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=Location, y=d15N))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=Location, y=d13C))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=County, y=d15N))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=County, y=d13C))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=Sex, y=d15N))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=Sex, y=d13C))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=C.N, y=d15N))+
+  geom_point()
+ggplot(data = ds, aes(x=C.N, y=d13C))+
+  geom_point()
+ggplot(data = ds, aes(x=median, y=d15N))+
+  geom_point()
+ggplot(data = ds, aes(x=median, y=d13C))+
+  geom_point()
+
 
 ```
 

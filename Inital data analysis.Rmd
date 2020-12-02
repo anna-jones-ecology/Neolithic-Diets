@@ -7,7 +7,7 @@ opening excel file with cleaned data
 ```{r}
 library(ggplot2)
 ds<-read.csv("Rick Schulting - Irish human isos.csv") 
-ds[17:21]<- NULL
+ds[18:21]<- NULL
 ds<-ds[-c(150, 151, 152),]
 ds$d13C<-as.numeric(ds$d13C)
 ds$d15N<-as.numeric(ds$d15N)
@@ -18,6 +18,10 @@ ggplot(data = ds, aes(x=Site.type, y=d13C))+
 ggplot(data = ds, aes(x=Age, y=d15N))+
   geom_boxplot()
 ggplot(data = ds, aes(x=Age, y=d13C))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=Period, y=d15N))+
+  geom_boxplot()
+ggplot(data = ds, aes(x=Period, y=d13C))+
   geom_boxplot()
 ggplot(data = ds, aes(x=Location, y=d15N))+
   geom_boxplot()
@@ -42,4 +46,27 @@ ggplot(data = ds, aes(x=median, y=d13C))+
 
 
 ```
+```{r}
+chisq.test(ds$d15N, ds$Period)
+chisq.test(ds$d13C,ds$Period) #SIG
+chisq.test(ds$d15N, ds$Location)
+chisq.test(ds$d13C,ds$Location)
+
+```
+```{r}
+library(rstatix)
+identify_outliers(data=ds, d13C)#three outliers: 43-45, both the Ferriters cove specimens and the dog specimen from Dalkey Island, all are coastal
+identify_outliers(data=ds, d15N)#no outliers
+```
+
+```{r}
+model1<-lm(d15N~County, data=ds)
+plot(residuals(model1))
+shapiro_test(residuals(model1))#cant assume normality!
+library(dplyr)
+group_by(ds,County) %>%
+  summarise(mean(d15N))
+kruskal.test(d15N~County, data=ds)#yes significant difference in N15 between countys
+```
+
 
